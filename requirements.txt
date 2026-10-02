@@ -1,0 +1,30 @@
+# AI Movie Studio — Python 3.14+
+# Core API + agent orchestration
+fastapi
+uvicorn[standard]
+pydantic
+pydantic-settings
+python-dotenv
+
+# Agentic workflow
+langchain
+langgraph
+langsmith
+
+# Durable workflows
+# temporalio
+
+# # LLM gateway / model routing / budgets / fallbacks
+litellm
+
+# # Database
+# sqlalchemy
+# psycopg[binary]
+# alembic
+# pgvector
+
+# # Cache / fast state
+# redis
+
+# # Event bus
+# confluent-kafka
