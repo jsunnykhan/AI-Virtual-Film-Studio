@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from pydantic import BaseModel, Field
 
-from apps.agents.core.base_agent import BaseAgent
-from apps.agents.core.context import ContextManager
-from apps.agents.core.memory import InMemoryStore
-from apps.agents.core.policies import (
+from agents.core.base_agent import BaseAgent
+from agents.core.context import ContextManager
+from agents.core.memory import InMemoryStore
+from agents.core.policies import (
     AgentPolicy,
     PolicyEngine,
 )

@@ -6,10 +6,10 @@ from typing import Generic, TypeVar
 import litellm
 from pydantic import BaseModel
 
-from apps.agents.core.context import ContextManager
-from apps.agents.core.memory import MemoryStore
-from apps.agents.core.policies import AgentPolicy, PolicyEngine
-from apps.agents.core.schemas import (
+from agents.core.context import ContextManager
+from agents.core.memory import MemoryStore
+from agents.core.policies import AgentPolicy, PolicyEngine
+from agents.core.schemas import (
     AgentContext,
     AgentResult,
     AgentTask,

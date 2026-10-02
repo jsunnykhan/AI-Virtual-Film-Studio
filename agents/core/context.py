@@ -1,6 +1,6 @@
-from apps.agents.core.memory import MemoryStore
-from apps.agents.core.policies import AgentPolicy
-from apps.agents.core.schemas import AgentContext, AgentTask
+from agents.core.memory import MemoryStore
+from agents.core.policies import AgentPolicy
+from agents.core.schemas import AgentContext, AgentTask
 
 
 class ContextManager:
