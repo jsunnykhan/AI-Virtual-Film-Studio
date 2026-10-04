@@ -15,7 +15,7 @@ from agents.core.schemas import (
     AgentTask,
 )
 
-from apps.shared.core.settings import Settings
+from shared.core.settings import Settings
 
 OutputT = TypeVar("OutputT", bound=BaseModel)
 

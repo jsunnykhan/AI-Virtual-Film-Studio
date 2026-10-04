@@ -11,8 +11,7 @@ class MemoryStore(ABC):
     async def get_project_summary(
         self,
         project_id: str,
-    ) -> str | None:
-       ...
+    ) -> str | None: ...
 
     @abstractmethod
     async def get_canon(

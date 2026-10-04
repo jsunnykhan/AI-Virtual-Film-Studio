@@ -18,9 +18,10 @@ class Settings(BaseSettings):
     openai_model: str = "place-your-llm-model-name"
     openai_base_url: str = "if-any-place"
 
-    # langchain_api_key: str = ""
-    # langchain_tracing_v2: str = "false"
-    # langchain_project: str = "ai_movie_studio"
+    langchain_api_key: str = ""
+    langchain_tracing_v2: bool = False
+    langchain_project: str = "ai_movie_studio"
+    langchain_endpoint: str = "https://api.smith.langchain.com"
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
