@@ -1,11 +1,11 @@
-from agents.core.memory import MemoryStore
+from agents.core.memory import StudioStore
 from agents.core.policies import AgentPolicy
 from agents.core.schemas import AgentContext, AgentTask
 
 
 class ContextManager:
 
-    def __init__(self, memory: MemoryStore) -> None:
+    def __init__(self, memory: StudioStore) -> None:
         self.memory = memory
 
     async def build(

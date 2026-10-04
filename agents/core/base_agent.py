@@ -7,7 +7,7 @@ import litellm
 from pydantic import BaseModel
 
 from agents.core.context import ContextManager
-from agents.core.memory import MemoryStore
+from agents.core.memory import StudioStore
 from agents.core.policies import AgentPolicy, PolicyEngine
 from agents.core.schemas import (
     AgentContext,
@@ -36,7 +36,7 @@ class BaseAgent(ABC, Generic[OutputT]):
     def __init__(
         self,
         *,
-        memory: MemoryStore,
+        memory: StudioStore,
         context_manager: ContextManager,
         policy: AgentPolicy,
         policy_engine: PolicyEngine,

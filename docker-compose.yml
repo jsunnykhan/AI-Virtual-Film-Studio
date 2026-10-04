@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+
+    container_name: ai-movie-studio-postgres
+
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: ai_movie_studio
+      POSTGRES_USER: studio
+      POSTGRES_PASSWORD: studio
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
