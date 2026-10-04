@@ -11,12 +11,15 @@ class Settings(BaseSettings):
     jwt_algorithm: str = "HS256"
     access_token_expire_minutes: int = 60
 
-    database_url: str = "postgresql+psycopg://postgres:postgres@db:5432/ai_movie_studio"
+    database_url: str = "postgresql+asyncpg://studio:studio@localhost:5432/ai_movie_studio"
     redis_url: str = "redis://redis:6379/0"
 
     openai_api_key: str = "place-your-open-api-key"
     openai_model: str = "place-your-llm-model-name"
     openai_base_url: str = "if-any-place"
+
+    embedding_model: str = "BAAI/bge-small-en-v1.5"
+    embedding_dim: int = 384
 
     langchain_api_key: str = ""
     langchain_tracing_v2: bool = False

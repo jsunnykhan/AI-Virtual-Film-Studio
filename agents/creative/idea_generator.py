@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 
 from agents.core.base_agent import BaseAgent
-from memory.in_memory import InMemoryStore
+from memory.vector_store import get_vector_store
 from agents.core.policies import AgentPolicy, PolicyEngine
 from agents.core.context import ContextManager
 
@@ -147,7 +147,7 @@ IDEA_GENERATOR_POLICY = AgentPolicy(
 )
 
 
-memory = InMemoryStore()
+memory = get_vector_store()
 
 context_manager = ContextManager(memory)
 

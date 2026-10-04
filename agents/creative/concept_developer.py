@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 
 from agents.core.base_agent import BaseAgent
 from agents.core.context import ContextManager
-from memory.in_memory import InMemoryStore
+from memory.vector_store import get_vector_store
 from agents.core.policies import AgentPolicy, PolicyEngine
 
 
@@ -191,7 +191,7 @@ Do not invent external facts.
         return ConceptDeveloperResponse
 
 
-memory = InMemoryStore()
+memory = get_vector_store()
 
 context_manager = ContextManager(memory)
 
