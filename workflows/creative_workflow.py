@@ -4,16 +4,10 @@ from langgraph.graph import END, START, StateGraph
 
 from agents.core.schemas import AgentTask
 from agents.core.states import CreativeWorkflowState
-from agents.core.policies import AgentPolicy
 
-from agents.creative.idea_generator import (
+from agents.agent_container import (
     idea_generator,
-)
-from agents.creative.idea_critic import (
     idea_critic,
-)
-
-from agents.creative.concept_developer import (
     concept_developer,
 )
 
@@ -53,6 +47,13 @@ async def idea_generator_node(state: CreativeWorkflowState):
         input_data={
             "user_request": state.get("user_request", ""),
             "iteration": state.get("iteration", 0),
+            "max_iterations": state.get("max_iterations", 3),
+            "ideas": state.get("ideas", []),
+            "critique": state.get("critique", {}),
+            "selected_idea": state.get("selected_idea"),
+            "concept": state.get("concept"),
+            "status": state.get("status", ""),
+            "error": state.get("error"),
         },
     )
 
@@ -184,35 +185,23 @@ def build_creative_workflow():
         "idea_generator",
     )
 
-    # --------------------------------------------------------
-    # Generator → Critic
-    # --------------------------------------------------------
-
     graph.add_edge(
         "idea_generator",
-        "idea_critic",
-    )
-
-    # --------------------------------------------------------
-    # Critic → conditional
-    # --------------------------------------------------------
-
-    graph.add_conditional_edges(
-        "idea_critic",
-        route_after_critic,
-        {
-            "regenerate": "idea_generator",
-            "develop": "concept_developer",
-        },
-    )
-
-    # --------------------------------------------------------
-    # Concept → END
-    # --------------------------------------------------------
-
-    graph.add_edge(
-        "concept_developer",
         END,
     )
+
+    # graph.add_conditional_edges(
+    #     "idea_critic",
+    #     route_after_critic,
+    #     {
+    #         "regenerate": "idea_generator",
+    #         "develop": "concept_developer",
+    #     },
+    # )
+
+    # graph.add_edge(
+    #     "concept_developer",
+    #     END,
+    # )
 
     return graph.compile()

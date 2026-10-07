@@ -127,18 +127,3 @@ Return ONLY valid JSON matching the requested schema.
     @property
     def output_schema(self) -> type[IdeaCriticResponse]:
         return IdeaCriticResponse
-
-
-memory = get_vector_store()
-
-context_manager = ContextManager(memory)
-
-policy_engine = PolicyEngine()
-
-
-idea_critic = IdeaCriticAgent(
-    memory=memory,
-    context_manager=context_manager,
-    policy=IDEA_CRITIC_POLICY,
-    policy_engine=policy_engine,
-)

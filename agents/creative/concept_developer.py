@@ -50,24 +50,6 @@ class ConceptDeveloperResponse(BaseModel):
     development_status: str
 
 
-CONCEPT_DEVELOPER_POLICY = AgentPolicy(
-    agent_id="concept_developer",
-    model="openai/gpt-oss-120b",
-    max_input_tokens=10000,
-    max_output_tokens=4000,
-    temperature=0.55,
-    allowed_tools=(
-        "creative_ideas.get",
-        "creative_ideas.search",
-        "creative_evaluations.get",
-        "movie_bible.search",
-        "project.create",
-    ),
-    max_retries=2,
-    require_structured_output=True,
-)
-
-
 class ConceptDeveloperAgent(BaseAgent[ConceptDeveloperResponse]):
 
     @property
@@ -191,16 +173,19 @@ Do not invent external facts.
         return ConceptDeveloperResponse
 
 
-memory = get_vector_store()
-
-context_manager = ContextManager(memory)
-
-policy_engine = PolicyEngine()
-
-
-concept_developer = ConceptDeveloperAgent(
-    memory=memory,
-    context_manager=context_manager,
-    policy=CONCEPT_DEVELOPER_POLICY,
-    policy_engine=policy_engine,
+CONCEPT_DEVELOPER_POLICY = AgentPolicy(
+    agent_id="concept_developer",
+    model="openai/gpt-oss-120b",
+    max_input_tokens=10000,
+    max_output_tokens=4000,
+    temperature=0.55,
+    allowed_tools=(
+        "creative_ideas.get",
+        "creative_ideas.search",
+        "creative_evaluations.get",
+        "movie_bible.search",
+        "project.create",
+    ),
+    max_retries=2,
+    require_structured_output=True,
 )

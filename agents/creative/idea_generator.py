@@ -145,18 +145,3 @@ IDEA_GENERATOR_POLICY = AgentPolicy(
     max_retries=2,
     require_structured_output=True,
 )
-
-
-memory = get_vector_store()
-
-context_manager = ContextManager(memory)
-
-policy_engine = PolicyEngine()
-
-
-idea_generator = IdeaGeneratorAgent(
-    memory=memory,
-    context_manager=context_manager,
-    policy=IDEA_GENERATOR_POLICY,
-    policy_engine=policy_engine,
-)
