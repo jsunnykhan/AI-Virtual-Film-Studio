@@ -4,6 +4,9 @@ from pydantic import BaseModel, Field
 
 from agents.core.base_agent import BaseAgent
 from agents.core.policies import AgentPolicy
+from shared.core.settings import Settings
+
+settings = Settings()
 
 
 class SeriesCharacter(BaseModel):
@@ -171,7 +174,7 @@ Do not invent external facts.
 
 CONCEPT_DEVELOPER_POLICY = AgentPolicy(
     agent_id="concept_developer",
-    model="openai/gpt-oss-120b",
+    model=settings.openai_model,
     max_input_tokens=10000,
     max_output_tokens=4000,
     temperature=0.55,

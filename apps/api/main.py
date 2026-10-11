@@ -9,6 +9,7 @@ from db.connection import close_pool
 from db.init_db import init_db
 from shared.core.tracing import configure_tracing
 from workflows.creative_workflow import build_creative_workflow
+import uuid
 
 
 @asynccontextmanager
@@ -23,19 +24,24 @@ app = FastAPI(lifespan=lifespan)
 
 
 class Item(BaseModel):
-    project_id: str = "demo"
-    workflow_id: str = "creative-demo"
-    task_id: str = "task-001"
-    user_request: str = "Create a fun animated series about a lost robot."
-    iteration: int = 0
-    max_iterations: int = 3
+    project_id: str
+    iteration: int
+    max_iterations: int
 
 
 @app.post("/")
-async def read_root(item: Item):
+async def read_root():
+    item_dict = {
+        "project_id": str(uuid.uuid4()),
+        "iteration": 0,
+        "max_iterations": 3
+    }
+    item_dict["status"] = "started"
+    item_dict["project_id"] = item_dict.get("project_id", str(uuid.uuid4()))
+
     workflow = build_creative_workflow()
     return await workflow.ainvoke(
-        cast(Any, item.model_dump()),
+        cast(Any, item_dict),
         config={"recursion_limit": 20},
     )
 

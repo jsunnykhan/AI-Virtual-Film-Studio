@@ -3,10 +3,12 @@ from typing import Literal
 
 from agents.core.base_agent import BaseAgent
 from agents.core.policies import AgentPolicy
+from shared.core.settings import Settings
 from tools.base import ToolName
 
 type MovieType = Literal["movie", "series", "short_film"]
 
+settings = Settings()
 
 class ExecutiveProducerResponse(BaseModel):
     concept_id: str
@@ -255,7 +257,7 @@ Do not invent external facts, tool results or approval records.
 
 EXECUTIVE_PRODUCER_POLICY = AgentPolicy(
     agent_id="executive_producer",
-    model="openai/gpt-oss-120b",
+    model=settings.openai_model,
     max_input_tokens=10000,
     max_output_tokens=4000,
     temperature=0.9,

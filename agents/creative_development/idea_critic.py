@@ -3,9 +3,10 @@ from __future__ import annotations
 from pydantic import BaseModel, Field
 
 from agents.core.base_agent import BaseAgent
-from agents.core.context import ContextManager
-from memory.vector_store import get_vector_store
-from agents.core.policies import AgentPolicy, PolicyEngine
+from agents.core.policies import AgentPolicy
+from shared.core.settings import Settings
+
+settings = Settings()
 
 
 class CriticIssue(BaseModel):
@@ -115,7 +116,7 @@ Return ONLY valid JSON matching the requested schema.
 
 IDEA_CRITIC_POLICY = AgentPolicy(
     agent_id="idea_critic",
-    model="openai/gpt-oss-120b",
+    model=settings.openai_model,
     max_input_tokens=7000,
     max_output_tokens=2500,
     temperature=0.2,

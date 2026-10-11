@@ -1,8 +1,10 @@
 from pydantic import BaseModel, Field
 
 from agents.core.base_agent import BaseAgent
-from memory.vector_store import get_vector_store
 from agents.core.policies import AgentPolicy
+from shared.core.settings import Settings
+
+settings = Settings()
 
 
 class CharacterSeed(BaseModel):
@@ -41,8 +43,8 @@ class IdeaGeneratorAgent(BaseAgent[IdeaGeneratorOutput]):
 You are the Idea Generator Agent for an autonomous AI animation studio.
 
 Your responsibility is to continuously generate original animated-series / movie 
-concepts that are suitable for production by an AI animation pipeline. You will create
-concepts that can support repeated episodes and potentially multiple seasons.
+concepts suitable for production by an AI animation pipeline. Choose whether each
+concept works best as a series or a movie; no user prompt is required.
 
 You are a CREATIVE DEVELOPMENT agent.
 
@@ -69,33 +71,18 @@ Every idea must have:
 9. A strong episode engine.
 10. Recurring story opportunities.
 11. A recognizable visual identity.
-12. Long-term series potential.
+12. Long-term potential appropriate to the chosen format.
 
-SERIES-FIRST THINKING
+FORMAT AND STORY STRUCTURE
 
-Do not create concepts that only work for one story.
+For a series, create a premise that naturally produces many different episodes and
+has long-term season potential.
 
-Ask internally:
+For a movie, create a self-contained feature story with a satisfying resolution.
+Set episode_engine to "Not applicable: movie format" and describe whether the story
+is standalone or has sequel potential in season_potential.
 
-"Can this premise naturally produce many different episodes?"
-
-A strong episode engine might come from:
-
-- a recurring mission
-- a strange world
-- a recurring problem
-- character relationships
-- exploration
-- competition
-- mystery
-- school/work life
-- community life
-- episodic adventures
-
-Avoid generic concepts such as:
-"three friends go on adventures."
-
-The concept needs a specific hook.
+In either format, give the concept a specific hook and a clear central conflict.
 
 ORIGINALITY
 
@@ -134,7 +121,7 @@ Do not include long explanations.
 
 IDEA_GENERATOR_POLICY = AgentPolicy(
     agent_id="idea_generator",
-    model="openai/gpt-oss-120b",
+    model=settings.openai_model,
     max_input_tokens=6000,
     max_output_tokens=2500,
     temperature=0.85,
