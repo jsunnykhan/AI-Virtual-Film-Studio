@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import Any
 
 from agents.core.memory import StudioStore
-from tools.base import ToolSpec
+from tools.base import ToolName, ToolSpec
 from tools.character import CharacterGetInput, character_get
 from tools.location import LocationGetInput, location_get
 from tools.movie_bible import MovieBibleSearchInput, movie_bible_search
@@ -15,7 +15,7 @@ class ToolRegistry:
         self.store = store
         self._tools = {tool.name: tool for tool in tools}
 
-    def get(self, name: str) -> ToolSpec | None:
+    def get(self, name: str | ToolName) -> ToolSpec | None:
         return self._tools.get(name)
 
     def names(self) -> tuple[str, ...]:
@@ -44,31 +44,31 @@ def build_registry(store: StudioStore) -> ToolRegistry:
         store=store,
         tools=[
             ToolSpec(
-                "movie_bible.search",
+                ToolName.MOVIE_BIBLE_SEARCH,
                 "Search approved Movie Bible/canon records for a project.",
                 MovieBibleSearchInput,
                 movie_bible_search,
             ),
             ToolSpec(
-                "character.get",
+                ToolName.CHARACTER_GET,
                 "Get one canonical character by ID.",
                 CharacterGetInput,
                 character_get,
             ),
             ToolSpec(
-                "location.get",
+                ToolName.LOCATION_GET,
                 "Get one canonical location by ID.",
                 LocationGetInput,
                 location_get,
             ),
             ToolSpec(
-                "scene.get",
+                ToolName.SCENE_GET,
                 "Get one canonical scene by ID.",
                 SceneGetInput,
                 scene_get,
             ),
             ToolSpec(
-                "shot.create",
+                ToolName.SHOT_CREATE,
                 "Create a new planned shot artifact in project canon.",
                 ShotCreateInput,
                 shot_create,
