@@ -174,6 +174,18 @@ class BaseAgent(ABC, Generic[OutputT]):
         system_prompt = self._build_system_prompt(context)
 
         user_prompt = self._build_user_prompt(context)
+        request_options = {}
+        if self.policy.reasoning_effort is not None:
+            request_options["reasoning_effort"] = self.policy.reasoning_effort
+        if self.policy.require_structured_output:
+            request_options["response_format"] = {
+                "type": "json_schema",
+                "json_schema": {
+                    "name": f"{self.agent_id}_output",
+                    "strict": False,
+                    "schema": self.output_schema.model_json_schema(),
+                },
+            }
 
         response = await litellm.acompletion(
             model=self.policy.model,
@@ -189,6 +201,7 @@ class BaseAgent(ABC, Generic[OutputT]):
             ],
             temperature=self.policy.temperature,
             max_tokens=self.policy.max_output_tokens,
+            **request_options,
         )
 
         content = response.choices[0].message.content  # type: ignore

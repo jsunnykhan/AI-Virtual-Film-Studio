@@ -178,6 +178,7 @@ CONCEPT_DEVELOPER_POLICY = AgentPolicy(
     max_input_tokens=10000,
     max_output_tokens=4000,
     temperature=0.55,
+    reasoning_effort="none",
     allowed_tools=(
         "creative_ideas.get",
         "creative_ideas.search",

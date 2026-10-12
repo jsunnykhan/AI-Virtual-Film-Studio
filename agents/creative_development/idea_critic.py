@@ -120,6 +120,7 @@ IDEA_CRITIC_POLICY = AgentPolicy(
     max_input_tokens=7000,
     max_output_tokens=2500,
     temperature=0.2,
+    reasoning_effort="none",
     allowed_tools=(
         "creative_ideas.get",
         "creative_ideas.search",

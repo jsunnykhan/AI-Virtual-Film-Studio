@@ -14,6 +14,7 @@ class AgentPolicy:
     max_input_tokens: int = 8_000
     max_output_tokens: int = 2_000
     temperature: float = 0.2
+    reasoning_effort: str | None = None
     allowed_tools: tuple[str, ...] = field(default_factory=tuple)
     max_retries: int = 2
     require_structured_output: bool = True

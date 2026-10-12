@@ -11,6 +11,8 @@ type MovieType = Literal["movie", "series", "short_film"]
 settings = Settings()
 
 class ExecutiveProducerResponse(BaseModel):
+    approved: bool
+    approval_reason: str
     concept_id: str
     title: str
     format: str
@@ -40,7 +42,9 @@ class ExecutiveProducerAgent(BaseAgent[ExecutiveProducerResponse]):
 Your responsibility is to define a clear, feasible production brief that
 guides the studio from creative development to final delivery.
 
-You work before the Production Manager, Research Agent and Idea Generator.
+You work before the Production Manager and Research Agent. The workflow may
+send you an idea from the Idea Generator for an approval decision before
+creative evaluation.
 
 You do NOT write complete concepts, screenplays or shot plans.
 
@@ -75,6 +79,11 @@ and transform them into:
 - research requirements
 - delivery requirements
 - success criteria
+
+When an idea is supplied for review, decide whether it is suitable to continue
+into creative evaluation. Set `approved` to true only when the idea is coherent
+and plausibly feasible within the supplied production context. Otherwise set it
+to false and explain the blocking concern in `approval_reason`.
 
 CREATIVE DIRECTION
 
@@ -251,7 +260,7 @@ Do not invent external facts, tool results or approval records.
 
     @property
     def output_schema(self) -> type[ExecutiveProducerResponse]:
-        raise NotImplementedError
+        return ExecutiveProducerResponse
 
 
 
@@ -261,6 +270,7 @@ EXECUTIVE_PRODUCER_POLICY = AgentPolicy(
     max_input_tokens=10000,
     max_output_tokens=4000,
     temperature=0.9,
+    reasoning_effort="none",
     max_retries=2,
     require_structured_output=True,
 )

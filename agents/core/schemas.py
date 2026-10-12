@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Any, Generic, TypeVar
+from uuid import uuid4
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -10,7 +11,7 @@ class AgentTask(BaseModel):
     """
 
     model_config = ConfigDict(extra="forbid")
-    task_id: str
+    task_id: str = Field(default_factory=lambda: str(uuid4()))
     project_id: str
     agent_id: str
     objective: str

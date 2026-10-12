@@ -6,8 +6,10 @@ class CreativeWorkflowState(TypedDict, total=False):
     workflow_id: str
     task_id: str
     user_request: str
+    idea: dict[str, Any]
     ideas: list[dict[str, Any]]
     critique: dict[str, Any]
+    final_decision: dict[str, Any]
     selected_idea: dict[str, Any] | None
     concept: dict[str, Any] | None
     iteration: int

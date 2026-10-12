@@ -125,6 +125,7 @@ IDEA_GENERATOR_POLICY = AgentPolicy(
     max_input_tokens=6000,
     max_output_tokens=2500,
     temperature=0.85,
+    reasoning_effort="none",
     allowed_tools=(
         "movie_bible.search",
         "creative_ideas.search",

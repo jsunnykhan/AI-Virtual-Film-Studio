@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from agents.core.states import CreativeWorkflowState
 from agents.core.schemas import AgentTask
 
@@ -5,6 +7,7 @@ from agents.agent_container import (
     idea_generator,
     idea_critic,
     concept_developer,
+    executive_producer
 )
 
 ## ============================================================
@@ -17,37 +20,40 @@ async def idea_generator_node(state: CreativeWorkflowState):
     Node for generating ideas.
     """
     task = AgentTask(
-        task_id=state.get("task_id", ""),
+        task_id=state.get("task_id") or str(uuid4()),
         project_id=state.get("project_id", ""),
         agent_id="idea_generator",
         objective=(
             "Autonomously generate an original animated series or movie concept. "
-            "Choose the format, genre, and story without requiring a user prompt."
+            "Choose the format, genre, and story without requiring a user prompt. "
+            "Use any prior producer or critic feedback to avoid repeating rejected ideas."
         ),
         input_data={
+            "user_request": "Autonomously generate an original animated series or movie concept. Choose the format, genre, and story without requiring a user prompt.",
             "iteration": state.get("iteration", 0),
             "max_iterations": state.get("max_iterations", 3),
-            "ideas": state.get("ideas", []),
-            "critique": state.get("critique", {}),
-            "selected_idea": state.get("selected_idea"),
-            "concept": state.get("concept"),
-            "status": state.get("status", ""),
-            "error": state.get("error"),
+            "previous_idea": state.get("idea"),
+            "executive_feedback": state.get("final_decision"),
+            "critic_feedback": state.get("critique"),
         },
     )
 
     result = await idea_generator.run(task)
     return {
+        "task_id": task.task_id,
+        "iteration": state.get("iteration", 0) + 1,
         "idea": result.model_dump(),
-        "status": "idea_generated",
+        "status": "idea_generated" if result.success else "idea_generation_failed",
+        "error": "; ".join(result.errors) if result.errors else None,
     }
+
 
 
 async def idea_critic_node(
     state: CreativeWorkflowState,
 ):
     task = AgentTask(
-        task_id=state.get("task_id", ""),
+        task_id=state.get("task_id") or str(uuid4()),
         project_id=state.get("project_id", ""),
         agent_id="idea_critic",
         objective="Evaluate the generated animated-series concept",
@@ -62,7 +68,8 @@ async def idea_critic_node(
 
     return {
         "critique": result.model_dump(),
-        "status": "idea_criticized",
+        "status": "idea_criticized" if result.success else "idea_critic_failed",
+        "error": "; ".join(result.errors) if result.errors else None,
     }
 
 
@@ -70,7 +77,7 @@ async def concept_developer_node(
     state: CreativeWorkflowState,
 ):
     task = AgentTask(
-        task_id=state.get("task_id", ""),
+        task_id=state.get("task_id") or str(uuid4()),
         project_id=state.get("project_id", ""),
         agent_id="concept_developer",
         objective="Develop the approved idea into a complete series concept",
@@ -87,5 +94,41 @@ async def concept_developer_node(
 
     return {
         "concept": result.model_dump(),
-        "status": "concept_developed",
+        "status": "concept_developed" if result.success else "concept_development_failed",
+        "error": "; ".join(result.errors) if result.errors else None,
+    }
+
+async def executive_producer_node(
+    state: CreativeWorkflowState,
+):
+    task = AgentTask(
+        task_id=state.get("task_id") or str(uuid4()),
+        project_id=state.get("project_id", ""),
+        agent_id="executive_producer",
+        objective=(
+            "Review the generated creative idea for coherence and feasibility. "
+            "Approve it for critic evaluation only if suitable."
+        ),
+        input_data={
+            "user_request": state.get("user_request", ""),
+            "idea": state.get("idea"),
+            "critique": state.get("critique", {}),
+            "concept": state.get("concept", {}),
+        },
+    )
+
+    result = await executive_producer.run(task)
+
+    print(f"Executive Producer Result: {result.model_dump()}")
+
+    return {
+        "final_decision": result.model_dump(),
+        "status": (
+            "executive_approved"
+            if result.success and result.output and result.output.approved
+            else "executive_rejected"
+            if result.success
+            else "executive_producer_failed"
+        ),
+        "error": "; ".join(result.errors) if result.errors else None,
     }
