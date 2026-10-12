@@ -7,7 +7,8 @@ from agents.agent_container import (
     idea_generator,
     idea_critic,
     concept_developer,
-    executive_producer
+    executive_producer,
+    research_agent,
 )
 
 ## ============================================================
@@ -119,8 +120,6 @@ async def executive_producer_node(
 
     result = await executive_producer.run(task)
 
-    print(f"Executive Producer Result: {result.model_dump()}")
-
     return {
         "final_decision": result.model_dump(),
         "status": (
@@ -130,5 +129,30 @@ async def executive_producer_node(
             if result.success
             else "executive_producer_failed"
         ),
+        "error": "; ".join(result.errors) if result.errors else None,
+    }
+    
+async def research_agent_node(
+    state: CreativeWorkflowState,
+):
+    task = AgentTask(
+        task_id=state.get("task_id") or str(uuid4()),
+        project_id=state.get("project_id", ""),
+        agent_id="research_agent",
+        objective="Conduct research to support creative development and factual accuracy.",
+        input_data={
+            "user_request": state.get("user_request", ""),
+            "idea": state.get("idea"),
+            "critique": state.get("critique", {}),
+            "concept": state.get("concept", {}),
+        },
+    )
+
+    result = await research_agent.run(task)
+
+    return {
+        "research_summary": result.model_dump().get("research_summary"),
+        "references": result.model_dump().get("references", []),
+        "status": "research_completed" if result.success else "research_failed",
         "error": "; ".join(result.errors) if result.errors else None,
     }

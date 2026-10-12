@@ -8,7 +8,8 @@ from workflows.nodes import (
     idea_generator_node,
     idea_critic_node,
     concept_developer_node,
-    executive_producer_node
+    executive_producer_node,
+    research_agent_node,
 )
 
 # ============================================================
@@ -67,6 +68,7 @@ def build_creative_workflow():
     graph.add_node("idea_critic", idea_critic_node)
     graph.add_node("concept_developer", concept_developer_node)
     graph.add_node("executive_producer", executive_producer_node)
+    graph.add_node("research_agent", research_agent_node)
 
     # --------------------------------------------------------
     # START
@@ -92,6 +94,7 @@ def build_creative_workflow():
         route_after_critic,
         {"develop": "concept_developer", "regenerate": "idea_generator", "stop": END},
     )
-    graph.add_edge("concept_developer", END)
+    graph.add_edge("concept_developer", "research_agent")
+    graph.add_edge("research_agent", END)
 
     return graph.compile()

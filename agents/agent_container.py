@@ -1,3 +1,7 @@
+from agents.creative_development.research_agent import (
+    ResearchAgent,
+    research_agent_policy,
+)
 from agents.executive_department.executive_producer import (
     EXECUTIVE_PRODUCER_POLICY,
     ExecutiveProducerAgent,
@@ -42,6 +46,13 @@ concept_developer = ConceptDeveloperAgent(
     context_manager=context_manager,
     policy_engine=policy_engine,
     policy=CONCEPT_DEVELOPER_POLICY,
+)
+
+research_agent = ResearchAgent(
+    memory=memory,
+    context_manager=context_manager,
+    policy_engine=policy_engine,
+    policy=research_agent_policy,
 )
 
 # Executive Department Agents
