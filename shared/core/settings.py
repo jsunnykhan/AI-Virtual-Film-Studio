@@ -21,6 +21,17 @@ class Settings(BaseSettings):
     embedding_model: str = "BAAI/bge-small-en-v1.5"
     embedding_dim: int = 384
 
+    # comfyui & media rendering
+    comfyui_base_url: str = "http://127.0.0.1:8188"
+    comfyui_timeout_seconds: int = 600
+    media_output_dir: str = "output"
+    ffmpeg_bin: str = "ffmpeg"
+
+    # 24/7 autonomous studio engine
+    autonomous_studio_enabled: bool = True
+    autonomous_loop_interval_seconds: int = 15
+
+    # for langsmith 
     langchain_api_key: str = ""
     langchain_tracing_v2: bool = False
     langchain_project: str = "ai_movie_studio"

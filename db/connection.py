@@ -38,12 +38,23 @@ async def get_pool() -> asyncpg.Pool:
 
         dsn = get_asyncpg_dsn()
         
-        # Ensure extension exists first using an isolated direct connection
-        direct_conn = await asyncpg.connect(dsn)
-        try:
-            await direct_conn.execute("CREATE EXTENSION IF NOT EXISTS vector;")
-        finally:
-            await direct_conn.close()
+        # Ensure database is reachable with retry loop (essential for docker-compose startup)
+        direct_conn = None
+        max_retries = 20
+        for attempt in range(1, max_retries + 1):
+            try:
+                direct_conn = await asyncpg.connect(dsn)
+                break
+            except Exception as exc:
+                if attempt == max_retries:
+                    raise RuntimeError(f"Could not connect to PostgreSQL after {max_retries} attempts: {exc}") from exc
+                await asyncio.sleep(2)
+
+        if direct_conn:
+            try:
+                await direct_conn.execute("CREATE EXTENSION IF NOT EXISTS vector;")
+            finally:
+                await direct_conn.close()
 
         _pool = await asyncpg.create_pool(
             dsn=dsn,

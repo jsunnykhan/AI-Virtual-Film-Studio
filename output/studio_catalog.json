@@ -1,0 +1,80 @@
+[
+  {
+    "cycle_number": 1,
+    "project_id": "auto_20261012_180850_b964e4",
+    "title": "Neon Bloom",
+    "format": "movie",
+    "runtime_decided_by_ai": "12 minutes per episode (estimated)",
+    "scene_video_path": null,
+    "final_movie_path": null,
+    "clearance_verdict": "cleared_for_worldwide_distribution",
+    "produced_at": "2026-10-12T18:13:29.923738+00:00",
+    "total_render_duration_seconds": 279.605388,
+    "status": "completed"
+  },
+  {
+    "cycle_number": 1,
+    "project_id": "auto_20261012_181507_16c8a1",
+    "title": "Spectrum Shift",
+    "format": "movie",
+    "runtime_decided_by_ai": "Single episode batch (pilot) recommended first; individual episodes targeted at 4-8 minutes.",
+    "scene_video_path": null,
+    "final_movie_path": null,
+    "clearance_verdict": "cleared_for_worldwide_distribution",
+    "produced_at": "2026-10-12T18:19:24.966964+00:00",
+    "total_render_duration_seconds": 257.426968,
+    "status": "completed"
+  },
+  {
+    "cycle_number": 2,
+    "project_id": "auto_20261012_181939_2212ce",
+    "title": "Echoes of the Glass Spire",
+    "format": "movie",
+    "runtime_decided_by_ai": 60.0,
+    "scene_video_path": null,
+    "final_movie_path": null,
+    "clearance_verdict": "conditional_approval_pending_cleanses",
+    "produced_at": "2026-10-12T18:45:01.947280+00:00",
+    "total_render_duration_seconds": 1521.971875,
+    "status": "completed"
+  },
+  {
+    "cycle_number": 3,
+    "project_id": "auto_20261012_184516_02d539",
+    "title": "The Clockwork Bloom",
+    "format": "movie",
+    "runtime_decided_by_ai": "9-12 minutes per episode",
+    "scene_video_path": null,
+    "final_movie_path": null,
+    "clearance_verdict": "cleared_for_worldwide_distribution",
+    "produced_at": "2026-10-12T18:49:21.493852+00:00",
+    "total_render_duration_seconds": 244.539106,
+    "status": "completed"
+  },
+  {
+    "cycle_number": 4,
+    "project_id": "auto_20261012_184936_5aeca3",
+    "title": "Echoes of the Glass Garden",
+    "format": "movie",
+    "runtime_decided_by_ai": 30.0,
+    "scene_video_path": null,
+    "final_movie_path": null,
+    "clearance_verdict": "conditional_approval_pending_cleanses",
+    "produced_at": "2026-10-12T19:12:43.367143+00:00",
+    "total_render_duration_seconds": 1386.865857,
+    "status": "completed"
+  },
+  {
+    "cycle_number": 5,
+    "project_id": "auto_20261012_192743_44ef98",
+    "title": "The Glitch in the Static",
+    "format": "movie",
+    "runtime_decided_by_ai": "Pilot episode: 12-14 minutes; Subsequent episodes: 8-10 minutes",
+    "scene_video_path": null,
+    "final_movie_path": null,
+    "clearance_verdict": "cleared_for_worldwide_distribution",
+    "produced_at": "2026-10-12T19:32:38.106435+00:00",
+    "total_render_duration_seconds": 294.229178,
+    "status": "completed"
+  }
+]

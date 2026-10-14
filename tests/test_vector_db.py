@@ -2,9 +2,11 @@ import asyncio
 import unittest
 
 from agents.core.memory import StudioStore
-from agents.creative.concept_developer import concept_developer
-from agents.creative.idea_critic import idea_critic
-from agents.creative.idea_generator import idea_generator
+from agents.agent_container import (
+    concept_developer,
+    idea_critic,
+    idea_generator,
+)
 from db.connection import close_pool
 from db.init_db import init_db
 from memory.postgres_vector import PostgresVectorStore
